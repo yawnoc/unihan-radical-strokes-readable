@@ -14,6 +14,10 @@ class Character:
     def tsv_line(self) -> str:
         return f'{self.code_point}\t{self.ideograph}\t{", ".join(str(index) for index in self.indexes)}\n'
 
+    @staticmethod
+    def tsv_header() -> str:
+        return f'code_point\tideograph\tindexes\n'
+
 
 class Index:
     def __init__(self, radical_number: int, stroke_count: int):
@@ -51,7 +55,7 @@ def main():
         )
     ]
 
-    tsv_content = ''.join(character.tsv_line() for character in characters)
+    tsv_content = Character.tsv_header() + ''.join(character.tsv_line() for character in characters)
     Path('unihan-radical-strokes-readable.tsv').write_text(tsv_content)
 
 
